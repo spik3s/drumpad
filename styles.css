@@ -1,0 +1,143 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.column-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.column-header .buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.label {
+    width: 40px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.button, .reset-column, .reset-row {
+    width: 2rem;
+    height: 3rem;
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s, outline 0.3s;
+    border-radius: 0.5rem; /* Rounded corners */
+    box-sizing: border-box;
+}
+
+.divider {
+    width: 0.5rem;
+}
+
+.button.on { background-color: red; }
+.button.roll { background-color: yellow; }
+.button.flare { background-color: purple; }
+.button.light { background-color: lightcoral; }
+.button.light-roll { background-color: lightyellow; }
+.button.light-flare { background-color: lightpink; }
+#row-acc .button.on { background-color: rgb(66, 64, 64); }
+
+.reset-column, .reset-row {
+    background-color: #9f9797;
+    color: white;
+    border: none;
+}
+
+.reset-row {
+    margin-left: .25rem;
+}
+
+.reset-column:hover, .reset-row:hover {
+    background-color: #e64a19;
+}
+
+.empty, .empty:hover {
+    background-color: #f0f0f0;
+    border: none;
+    cursor: default
+}
+
+#reset-pattern {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#reset-pattern:hover {
+    background-color: #e64a19;
+}
+
+#light-mode-toggle {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.page-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.page-button {
+    width: 2rem;
+    height: 2rem;
+    background-color: #9f9797;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 0.5rem;
+}
+
+.page-button:hover {
+    background-color: #e64a19;
+}
+
+.page-button.active {
+    background-color: #ff5722;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 10px;
+}
+
+.button.active-step {
+    outline: 3px solid darkgray;
+    outline-offset: -3px;
+}

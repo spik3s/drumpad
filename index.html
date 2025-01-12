@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum Pattern Creator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <button id="play-pause">Play</button>
+        <div class="column-header">
+            <span class="label"></span>
+            <div class="buttons">
+                <button class="reset-column" data-column="0">x</button>
+                <button class="reset-column" data-column="1">x</button>
+                <button class="reset-column" data-column="2">x</button>
+                <button class="reset-column" data-column="3">x</button>
+                <div class="divider"></div>
+                <button class="reset-column" data-column="4">x</button>
+                <button class="reset-column" data-column="5">x</button>
+                <button class="reset-column" data-column="6">x</button>
+                <button class="reset-column" data-column="7">x</button>
+                <div class="divider"></div>
+                <button class="reset-column" data-column="8">x</button>
+                <button class="reset-column" data-column="9">x</button>
+                <button class="reset-column" data-column="10">x</button>
+                <button class="reset-column" data-column="11">x</button>
+                <div class="divider"></div>
+                <button class="reset-column" data-column="12">x</button>
+                <button class="reset-column" data-column="13">x</button>
+                <button class="reset-column" data-column="14">x</button>
+                <button class="reset-column" data-column="15">x</button>
+            </div>
+            <div class="reset-row empty"></div>
+        </div>
+        <div class="row" id="row-oh">
+            <span class="label">OH</span>
+            <div class="buttons">
+                <!-- Buttons will be added here by JavaScript -->
+            </div>
+            <button class="reset-row">x</button>
+        </div>
+        <div class="row" id="row-ch">
+            <span class="label">CH</span>
+            <div class="buttons">
+                <!-- Buttons will be added here by JavaScript -->
+            </div>
+            <button class="reset-row">x</button>
+        </div>
+        <div class="row" id="row-hc">
+            <span class="label">HC</span>
+            <div class="buttons">
+                <!-- Buttons will be added here by JavaScript -->
+            </div>
+            <button class="reset-row">x</button>
+        </div>
+        <div class="row" id="row-lt">
+            <span class="label">LT</span>
+            <div class="buttons">
+                <!-- Buttons will be added here by JavaScript -->
+            </div>
+            <button class="reset-row">x</button>
+        </div>
+        <div class="row" id="row-sd">
+            <span class="label">SD</span>
+            <div class="buttons">
+                <!-- Buttons will be added here by JavaScript -->
+            </div>
+            <button class="reset-row">x</button>
+        </div>
+        <div class="row" id="row-bd">
+            <span class="label">BD</span>
+            <div class="buttons">
+                <!-- Buttons will be added here by JavaScript -->
+            </div>
+            <button class="reset-row">x</button>
+        </div>
+        <div class="row" id="row-acc">
+            <span class="label">ACC</span>
+            <div class="buttons">
+                <!-- Buttons will be added here by JavaScript -->
+            </div>
+            <button class="reset-row">x</button>
+        </div>
+        <div class="page-buttons">
+            <button class="page-button" data-page="0">1</button>
+            <button class="page-button" data-page="1">2</button>
+            <button class="page-button" data-page="2">3</button>
+            <button class="page-button" data-page="3">4</button>
+            <button class="page-button" data-page="4">5</button>
+            <button class="page-button" data-page="5">6</button>
+            <button class="page-button" data-page="6">7</button>
+            <button class="page-button" data-page="7">8</button>
+        </div>
+        <div class="controls">
+            <button id="reset-pattern">Reset pattern</button>
+            <label>
+                <input type="checkbox" id="light-mode-toggle"> Light Mode
+            </label>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
