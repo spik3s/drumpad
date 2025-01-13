@@ -274,31 +274,41 @@ document.addEventListener('DOMContentLoaded', () => {
             const isLight = buttonClasses.some(cls => 
                 ['light', 'light-roll', 'light-flare'].includes(cls)
             );
+            const isRoll = buttonClasses.some(cls => 
+                ['roll', 'light-roll'].includes(cls)
+            );
             
             if (isActive) {
                 const volume = isLight ? LIGHT_VOLUME : NORMAL_VOLUME;
+                const stepTime = calculateStepTime(currentBPM);
+                const playSound = (soundFunction) => {
+                    soundFunction(volume);
+                    if (isRoll) {
+                        setTimeout(() => soundFunction(volume), stepTime / 2);
+                    }
+                };
                 
                 switch(rowId) {
                     case 'row-oh':
-                        playOpenHiHatSound(volume);
+                        playSound(playOpenHiHatSound);
                         break;
                     case 'row-ch':
-                        playClosedHiHatSound(volume);
+                        playSound(playClosedHiHatSound);
                         break;
                     case 'row-hc':
-                        playHandClapSound(volume);
+                        playSound(playHandClapSound);
                         break;
                     case 'row-lt':
-                        playLowTomSound(volume);
+                        playSound(playLowTomSound);
                         break;
                     case 'row-sd':
-                        playSnareDrumSound(volume);
+                        playSound(playSnareDrumSound);
                         break;
                     case 'row-bd':
-                        playKickSound(volume);
+                        playSound(playKickSound);
                         break;
                     case 'row-acc':
-                        playAccentSound(volume);
+                        playSound(playAccentSound);
                         break;
                 }
             }
