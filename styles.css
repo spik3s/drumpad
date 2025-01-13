@@ -157,3 +157,25 @@ body {
     outline: 3px solid darkgray;
     outline-offset: -3px;
 }
+
+.controls button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.controls button:hover {
+    background-color: #45a049;
+}
+
+.controls button:active {
+    background-color: #3d8b40;
+}
+
+/* Remove any specific #play-pause or #reset-pattern styles if they exist */
