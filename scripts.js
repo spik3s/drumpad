@@ -1,16 +1,21 @@
 // scripts.js
-document.addEventListener('DOMContentLoaded', () => {
-    const normalStates = ['off', 'on', 'roll', 'flare'];
-    const lightStates = ['light', 'light-roll', 'light-flare'];
-    const allStates = ['off', 'on', 'roll', 'flare', 'light', 'light-roll', 'light-flare'];
-    const rows = ['row-oh', 'row-ch', 'row-hc', 'row-lt', 'row-sd', 'row-bd', 'row-acc'];
-    const totalPages = 8;
-    let currentPage = 0;
-    let lightMode = false;
-    let isPlaying = false;
-    let currentStep = 0;
-    let intervalId;
+const normalStates = ['off', 'on', 'roll', 'flare'];
+const lightStates = ['light', 'light-roll', 'light-flare'];
+const allStates = ['off', 'on', 'roll', 'flare', 'light', 'light-roll', 'light-flare'];
+const rows = ['row-oh', 'row-ch', 'row-hc', 'row-lt', 'row-sd', 'row-bd', 'row-acc'];
+const totalPages = 8;
+let currentPage = 0;
+let lightMode = false;
+let isPlaying = false;
+let currentStep = 0;
+let intervalId;
+let currentBPM = parseFloat(localStorage.getItem('sequencerBPM')) || 60;
 
+const calculateStepTime = (bpm) => {
+    return (60000 / bpm) / 4; // Convert BPM to milliseconds per step
+};
+
+document.addEventListener('DOMContentLoaded', () => {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
     // Function to create a kick drum sound using a sinewave and an envelope
@@ -270,15 +275,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add BPM handling
     const bpmInput = document.getElementById('bpmInput');
-    let currentBPM = localStorage.getItem('sequencerBPM') || 60;
     bpmInput.value = currentBPM;
 
-    const calculateStepTime = (bpm) => {
-        // Each beat represents 4 steps, so multiply by 4
-        return (60000 / bpm) / 4;
-    }
-
-    bpmInput.addEventListener('change', (e) => {
+    bpmInput.addEventListener('input', (e) => {
         let value = parseFloat(e.target.value);
         // Validate and constrain BPM
         if (isNaN(value) || value < 20) value = 20;
@@ -286,7 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
         value = Math.round(value * 100) / 100; // Round to 2 decimal places
 
         currentBPM = value;
-        bpmInput.value = value;
         localStorage.setItem('sequencerBPM', value);
 
         // If sequencer is playing, restart it with new tempo
