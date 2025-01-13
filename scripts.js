@@ -256,6 +256,46 @@ document.addEventListener('DOMContentLoaded', () => {
         currentStep = (currentStep + 1) % 16;
     };
 
+    const playStep = (step) => {
+        // Remove previous step indicator
+        rows.forEach(rowId => {
+            const row = document.getElementById(rowId);
+            const buttons = row.querySelectorAll('.button');
+            buttons.forEach(button => button.classList.remove('active-step'));
+            
+            // Add indicator to current step
+            buttons[step].classList.add('active-step');
+            
+            // Check button state and play sound if active
+            const buttonState = buttons[step].dataset.state;
+            if (buttonState !== 'off' && buttonState !== undefined) {
+                switch(rowId) {
+                    case 'row-oh':
+                        playOpenHatSound();
+                        break;
+                    case 'row-ch':
+                        playClosedHatSound();
+                        break;
+                    case 'row-hc':
+                        playHandClapSound();
+                        break;
+                    case 'row-lt':
+                        playLowTomSound();
+                        break;
+                    case 'row-sd':
+                        playSnareSound();
+                        break;
+                    case 'row-bd':
+                        playKickSound();
+                        break;
+                    case 'row-acc':
+                        playAccentSound();
+                        break;
+                }
+            }
+        });
+    };
+
     // Function to start the sequencer
     const startSequencer = () => {
         isPlaying = true;
