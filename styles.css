@@ -1,6 +1,6 @@
 :root {
     --app-width: 800px;  /* Base width of the app */
-    --app-height: 600px; /* Base height of the app */
+    --app-height: 800px; /* Base height of the app */
 }
 
 body {
@@ -14,7 +14,7 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    overflow: hidden;
+   /* overflow: hidden;*/
 }
 
 .container {
@@ -24,6 +24,7 @@ body {
     width: var(--app-width);
     height: var(--app-height);
     transform-origin: center center;
+    justify-content: flex-end;
 }
 
 @media screen and (max-width: 800px), screen and (max-height: 600px) {
