@@ -16,7 +16,26 @@ const calculateStepTime = (bpm) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    let audioContext;
+    
+    // Initialize audio context on user interaction
+    const initAudio = () => {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // iOS/Chrome specific unlock
+            if (audioContext.state === 'suspended') {
+                const unlock = async () => {
+                    await audioContext.resume();
+                    document.body.removeEventListener('touchstart', unlock);
+                    document.body.removeEventListener('mousedown', unlock);
+                };
+                document.body.addEventListener('touchstart', unlock, false);
+                document.body.addEventListener('mousedown', unlock, false);
+            }
+        }
+    };
+
     const NORMAL_VOLUME = 1.0;
     const LIGHT_VOLUME = 0.5;
 
@@ -442,6 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const playPauseButton = document.getElementById('play-pause');
     if (playPauseButton) {
         playPauseButton.addEventListener('click', () => {
+            initAudio();
             if (isPlaying) {
                 stopSequencer();
                 playPauseButton.textContent = 'Play';

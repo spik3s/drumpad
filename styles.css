@@ -24,7 +24,6 @@ body {
     width: var(--app-width);
     height: var(--app-height);
     transform-origin: center center;
-    justify-content: flex-end;
 }
 
 @media screen and (max-width: 800px), screen and (max-height: 600px) {
