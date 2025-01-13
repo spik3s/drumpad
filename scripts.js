@@ -17,9 +17,11 @@ const calculateStepTime = (bpm) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const NORMAL_VOLUME = 1.0;
+    const LIGHT_VOLUME = 0.5;
 
     // Function to create a kick drum sound using a sinewave and an envelope
-    const playKickSound = () => {
+    const playKickSound = (volume = NORMAL_VOLUME) => {
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
 
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         oscillator.frequency.setValueAtTime(150, audioContext.currentTime); // Start frequency
         oscillator.frequency.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5); // End frequency
 
-        gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Start gain
+        gainNode.gain.setValueAtTime(volume, audioContext.currentTime); // Start gain
         gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5); // End gain
 
         oscillator.connect(gainNode);
@@ -51,12 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to create an open hi-hat sound
-    const playOpenHiHatSound = () => {
+    const playOpenHiHatSound = (volume = NORMAL_VOLUME) => {
         const bufferSource = audioContext.createBufferSource();
         bufferSource.buffer = createNoiseBuffer();
 
         const gainNode = audioContext.createGain();
-        gainNode.gain.setValueAtTime(0.7, audioContext.currentTime); // Start gain
+        gainNode.gain.setValueAtTime(volume, audioContext.currentTime); // Start gain
         gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2); // End gain
 
         bufferSource.connect(gainNode);
@@ -67,12 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to create a closed hi-hat sound
-    const playClosedHiHatSound = () => {
+    const playClosedHiHatSound = (volume = NORMAL_VOLUME) => {
         const bufferSource = audioContext.createBufferSource();
         bufferSource.buffer = createNoiseBuffer();
 
         const gainNode = audioContext.createGain();
-        gainNode.gain.setValueAtTime(0.7, audioContext.currentTime); // Start gain
+        gainNode.gain.setValueAtTime(volume, audioContext.currentTime); // Start gain
         gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1); // End gain
 
         bufferSource.connect(gainNode);
@@ -83,14 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to create a hand clap sound
-    const playHandClapSound = () => {
+    const playHandClapSound = (volume = NORMAL_VOLUME) => {
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
 
         oscillator.type = 'square';
         oscillator.frequency.setValueAtTime(600, audioContext.currentTime); // Frequency
 
-        gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Start gain
+        gainNode.gain.setValueAtTime(volume, audioContext.currentTime); // Start gain
         gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1); // End gain
 
         oscillator.connect(gainNode);
@@ -101,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to create a low tom sound
-    const playLowTomSound = () => {
+    const playLowTomSound = (volume = NORMAL_VOLUME) => {
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
 
@@ -109,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         oscillator.frequency.setValueAtTime(100, audioContext.currentTime); // Start frequency
         oscillator.frequency.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5); // End frequency
 
-        gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Start gain
+        gainNode.gain.setValueAtTime(volume, audioContext.currentTime); // Start gain
         gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5); // End gain
 
         oscillator.connect(gainNode);
@@ -120,14 +122,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to create a snare drum sound
-    const playSnareDrumSound = () => {
+    const playSnareDrumSound = (volume = NORMAL_VOLUME) => {
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
 
         oscillator.type = 'triangle';
         oscillator.frequency.setValueAtTime(200, audioContext.currentTime); // Frequency
 
-        gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Start gain
+        gainNode.gain.setValueAtTime(volume, audioContext.currentTime); // Start gain
         gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2); // End gain
 
         oscillator.connect(gainNode);
@@ -265,34 +267,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentButton = buttons[step];
             currentButton.classList.add('active-step');
             
-            // Get all classes from the button
             const buttonClasses = Array.from(currentButton.classList);
             const isActive = buttonClasses.some(cls => 
                 ['on', 'roll', 'flare', 'light', 'light-roll', 'light-flare'].includes(cls)
             );
+            const isLight = buttonClasses.some(cls => 
+                ['light', 'light-roll', 'light-flare'].includes(cls)
+            );
             
             if (isActive) {
+                const volume = isLight ? LIGHT_VOLUME : NORMAL_VOLUME;
+                
                 switch(rowId) {
                     case 'row-oh':
-                        playOpenHiHatSound();
+                        playOpenHiHatSound(volume);
                         break;
                     case 'row-ch':
-                        playClosedHiHatSound();
+                        playClosedHiHatSound(volume);
                         break;
                     case 'row-hc':
-                        playHandClapSound();
+                        playHandClapSound(volume);
                         break;
                     case 'row-lt':
-                        playLowTomSound();
+                        playLowTomSound(volume);
                         break;
                     case 'row-sd':
-                        playSnareDrumSound();
+                        playSnareDrumSound(volume);
                         break;
                     case 'row-bd':
-                        playKickSound();
+                        playKickSound(volume);
                         break;
                     case 'row-acc':
-                        playAccentSound();
+                        playAccentSound(volume);
                         break;
                 }
             }
