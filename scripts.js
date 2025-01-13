@@ -257,24 +257,27 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const playStep = (step) => {
-        // Remove previous step indicator
         rows.forEach(rowId => {
             const row = document.getElementById(rowId);
             const buttons = row.querySelectorAll('.button');
             buttons.forEach(button => button.classList.remove('active-step'));
             
-            // Add indicator to current step
-            buttons[step].classList.add('active-step');
+            const currentButton = buttons[step];
+            currentButton.classList.add('active-step');
             
-            // Check button state and play sound if active
-            const buttonState = buttons[step].dataset.state;
-            if (buttonState !== 'off' && buttonState !== undefined) {
+            // Get all classes from the button
+            const buttonClasses = Array.from(currentButton.classList);
+            const isActive = buttonClasses.some(cls => 
+                ['on', 'roll', 'flare', 'light', 'light-roll', 'light-flare'].includes(cls)
+            );
+            
+            if (isActive) {
                 switch(rowId) {
                     case 'row-oh':
-                        playOpenHatSound();
+                        playOpenHiHatSound();
                         break;
                     case 'row-ch':
-                        playClosedHatSound();
+                        playClosedHiHatSound();
                         break;
                     case 'row-hc':
                         playHandClapSound();
@@ -283,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         playLowTomSound();
                         break;
                     case 'row-sd':
-                        playSnareSound();
+                        playSnareDrumSound();
                         break;
                     case 'row-bd':
                         playKickSound();
