@@ -260,6 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startSequencer = () => {
         isPlaying = true;
         const stepTime = calculateStepTime(currentBPM);
+        currentStep = 0; // Reset step counter
         intervalId = setInterval(() => {
             playStep(currentStep);
             currentStep = (currentStep + 1) % 16;
@@ -271,28 +272,36 @@ document.addEventListener('DOMContentLoaded', () => {
         isPlaying = false;
         clearInterval(intervalId);
         currentStep = 0;
+        // Clear active step indicators
+        rows.forEach(rowId => {
+            const row = document.getElementById(rowId);
+            const buttons = row.querySelectorAll('.button');
+            buttons.forEach(button => button.classList.remove('active-step'));
+        });
     };
 
     // Add BPM handling
     const bpmInput = document.getElementById('bpmInput');
-    bpmInput.value = currentBPM;
+    if (bpmInput) {
+        bpmInput.value = currentBPM;
 
-    bpmInput.addEventListener('input', (e) => {
-        let value = parseFloat(e.target.value);
-        // Validate and constrain BPM
-        if (isNaN(value) || value < 20) value = 20;
-        if (value > 300) value = 300;
-        value = Math.round(value * 100) / 100; // Round to 2 decimal places
+        bpmInput.addEventListener('input', (e) => {
+            let value = parseFloat(e.target.value);
+            // Validate and constrain BPM
+            if (isNaN(value) || value < 20) value = 20;
+            if (value > 300) value = 300;
+            value = Math.round(value * 100) / 100; // Round to 2 decimal places
 
-        currentBPM = value;
-        localStorage.setItem('sequencerBPM', value);
+            currentBPM = value;
+            localStorage.setItem('sequencerBPM', value);
 
-        // If sequencer is playing, restart it with new tempo
-        if (isPlaying) {
-            clearInterval(intervalId);
-            startSequencer();
-        }
-    });
+            // If sequencer is playing, restart it with new tempo
+            if (isPlaying) {
+                stopSequencer();
+                startSequencer();
+            }
+        });
+    }
 
     // Initialize buttons and add event listeners
     rows.forEach((rowId) => {
@@ -372,27 +381,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Play/Pause button functionality
     const playPauseButton = document.getElementById('play-pause');
-    playPauseButton.addEventListener('click', () => {
-        if (isPlaying) {
-            stopSequencer();
-            playPauseButton.textContent = 'Play';
-            console.log('Sequencer paused');
-        } else {
-            startSequencer();
-            playPauseButton.textContent = 'Pause';
-            console.log('Sequencer playing');
-        }
-        isPlaying = !isPlaying;
-    });
-
-    // Update play/pause button handlers
-    document.getElementById('playButton').addEventListener('click', () => {
-        if (!isPlaying) startSequencer();
-    });
-
-    document.getElementById('pauseButton').addEventListener('click', () => {
-        if (isPlaying) stopSequencer();
-    });
+    if (playPauseButton) {
+        playPauseButton.addEventListener('click', () => {
+            if (isPlaying) {
+                stopSequencer();
+                playPauseButton.textContent = 'Play';
+            } else {
+                startSequencer();
+                playPauseButton.textContent = 'Pause';
+            }
+        });
+    }
 
     // Load button states on page load
     loadButtonStates(currentPage);
